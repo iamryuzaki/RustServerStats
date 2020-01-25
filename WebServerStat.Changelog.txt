@@ -6,3 +6,4 @@
   * Redesigned from fixed to stretch.
   * Implemented values for plugins and FPS - Avg, Min, Max
   * Added color palette to AVG, Min, Max values
+  * Changed the size of the plug-in load measurement from seconds to milliseconds.
