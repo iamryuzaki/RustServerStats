@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
+    // FullChangeLog: https://github.com/iamryuzaki/RustServerStats/blob/master/Plugin/ServerStat.Changelog.txt
     // WebPanel: http://server-stats.gamewer.ru/
     // Thanks: Мизантроп
     // ChangeLog:
