@@ -1,0 +1,8 @@
+- v1.0.2 (25.01.2020)
+  * Added temporary - external design
+  * Implemented password login work
+  * Removed the Total Hook Time value in the list of plugins
+  * Added indentation at the bottom of the page to prevent FPS from closing the last plugin.
+  * Redesigned from fixed to stretch.
+  * Implemented values for plugins and FPS - Avg, Min, Max
+  * Added color palette to AVG, Min, Max values
