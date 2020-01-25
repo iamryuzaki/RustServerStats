@@ -1,0 +1,5 @@
+- v1.0.1 (25.01.2020)
+  * The plugin is adapted for all games on Oxide
+  * Change remote server Addr
+  * Remove rude using in plugin
+  * Add server password and config
