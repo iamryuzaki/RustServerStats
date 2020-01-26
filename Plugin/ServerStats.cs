@@ -21,7 +21,7 @@ namespace Oxide.Plugins
     //        * Remove rude using in plugin
     //        * Add server password and config
     //    - 1.0.2
-    //        * Change current fps to minimal fps from current second
+    //        * Adeed minimal fps from current second
 
     [Info("ServerStats", "TheRyuzaki", "1.0.2")]
     public class ServerStats : CovalencePlugin
