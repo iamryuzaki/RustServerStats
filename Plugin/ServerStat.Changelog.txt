@@ -1,5 +1,5 @@
  - 1.0.2 (26.01.2020)
-  * Change current fps to minimal fps from current second
+  * Adeed minimal fps from current second
 
 - v1.0.1 (25.01.2020)
   * The plugin is adapted for all games on Oxide
