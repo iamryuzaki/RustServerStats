@@ -1,6 +1,7 @@
 - v1.0.3 (26.01.2020)
   * Added H3 tag and append in tag - count plugins
   * Added total plugins chart
+  * Added to FPS - minimal fps line
   
 - v1.0.2 (25.01.2020)
   * Added temporary - external design
