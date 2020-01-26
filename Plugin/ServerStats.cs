@@ -20,16 +20,20 @@ namespace Oxide.Plugins
     //        * Change remote server Addr
     //        * Remove rude using in plugin
     //        * Add server password and config
-            
-    [Info("ServerStats", "TheRyuzaki", "1.0.1")]
+    //    - 1.0.2
+    //        * Change current fps to minimal fps from current second
+
+    [Info("ServerStats", "TheRyuzaki", "1.0.2")]
     public class ServerStats : CovalencePlugin
     {
         private static ServerStats Instance { get; set; } = null;
 
         private WebSocketSharp.WebSocket WebSocketClient = new WebSocket("ws://s1.server-stats.gamewer.ru:5191");
+        private FPSVisor ActiveVisor;
         private bool NetworkStatus = false;
         private bool HaveSubscribers = false;
         private bool HasUnloading = false;
+        private int MinimalFPS = 9999;
         
         
         protected override void LoadDefaultConfig()
@@ -47,7 +51,9 @@ namespace Oxide.Plugins
 
         void OnServerInitialized()
         {
-            this.Config.Load(); 
+            this.Config.Load();
+
+            this.ActiveVisor = Terrain.activeTerrain.gameObject.AddComponent<FPSVisor>();
             
             this.WebSocketClient.OnOpen += OnNetworkConnected;
             this.WebSocketClient.OnClose += OnNetworkClose;
@@ -55,10 +61,12 @@ namespace Oxide.Plugins
             this.timer.Repeat(1, 0, this.DoServerStats);
             this.DoNetworkConnect();
         }
+        
 
         void Unload()
         {
             this.HasUnloading = true;
+            Component.Destroy(this.ActiveVisor);
             this.WebSocketClient.CloseAsync();
         }
 
@@ -160,6 +168,20 @@ namespace Oxide.Plugins
             }
         }
 
+        public class FPSVisor : MonoBehaviour
+        {
+            private void Update()
+            {
+#if RUST
+            if (Instance.MinimalFPS > (int)global::Performance.current.frameRate)
+                Instance.MinimalFPS = (int)global::Performance.current.frameRate;
+#else
+             if (Instance.MinimalFPS > (int)(1f / UnityEngine.Time.deltaTime))
+                 Instance.MinimalFPS = (int)(1f / UnityEngine.Time.deltaTime);
+#endif
+            }
+        }
+
 #if RUST
         public class NetworkWelcomePacket : Pool.IPooled
 #else
@@ -202,11 +224,16 @@ namespace Oxide.Plugins
 #endif
 
             [JsonProperty("fps")]
-#if RUST
-            public int Fps => global::Performance.current.frameRate;
-#else
-            public int Fps => Mathf.RoundToInt(1f / UnityEngine.Time.smoothDeltaTime);
-#endif
+            public int Fps
+            {
+                get
+                {
+                    int currentValue = Instance.MinimalFPS;
+                    Instance.MinimalFPS = 9999;
+                    return currentValue;
+                }
+            }
+
             [JsonProperty("ent")]
 #if RUST
             public int Ent => BaseNetworkable.serverEntities.Count;
