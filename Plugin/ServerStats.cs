@@ -223,8 +223,8 @@ namespace Oxide.Plugins
             public List<PluginItem> ListPlugins { get; } = new List<PluginItem>();
 #endif
 
-            [JsonProperty("fps")]
-            public int Fps
+            [JsonProperty("minfps")]
+            public int MinimalFps
             {
                 get
                 {
@@ -233,6 +233,12 @@ namespace Oxide.Plugins
                     return currentValue;
                 }
             }
+            [JsonProperty("fps")]
+#if RUST
+            public int Fps => global::Performance.current.frameRate;
+#else
+            public int Fps => Mathf.RoundToInt(1f / UnityEngine.Time.smoothDeltaTime);
+#endif
 
             [JsonProperty("ent")]
 #if RUST
