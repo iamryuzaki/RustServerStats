@@ -1,3 +1,7 @@
+- v1.0.4 (29.01.2020)
+  * Added field SUM to plugin rows and ALL PLUGINS
+  * FIXED url in header to .cs file
+
 - v1.0.3 (26.01.2020)
   * Added H3 tag and append in tag - count plugins
   * Added total plugins chart
